@@ -1,0 +1,9 @@
+[package]
+name = "mspri1-2"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sea-orm = { version = "0.12.15", features = ["sqlx-postgres", "runtime-tokio-rustls", "macros"] }
+[workspace]
+members = [".", "migration"]
