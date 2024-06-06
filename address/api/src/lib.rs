@@ -7,6 +7,7 @@ use serde::Deserialize;
 use serde_json::json;
 
 use entities::address;
+use migration::MigratorTrait;
 
 #[derive(Debug, Clone)]
 struct AppState {
@@ -113,7 +114,11 @@ async fn create_address(state: web::Data<AppState>, payload: web::Payload) -> im
 pub async fn create() -> std::io::Result<()> {
     dotenv().ok();
     let url = std::env::var("DATABASE_URL").expect("DATABASE_URL introuvable !");
+    println!("{}", "-".repeat(100));
+    println!("{}", url);
+    println!("{}", "-".repeat(100));
     let db = Database::connect(url).await.unwrap();
+    migration::Migrator::fresh(&db).await.unwrap();
     HttpServer::new(move || {
         App::new().service(
             get_all_addresses

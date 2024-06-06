@@ -342,6 +342,7 @@ dependencies = [
  "actix-web",
  "dotenv",
  "entities",
+ "migration",
  "sea-orm",
  "serde",
  "serde_json",

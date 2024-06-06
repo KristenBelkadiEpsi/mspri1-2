@@ -1,16 +1,4 @@
 services:
-
-  postgres:
-    container_name: db
-    image: postgres:latest
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USERNAME: postgres
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
   backend:
     container_name: rustapp
     build:
@@ -20,8 +8,23 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+#    environment:
+#      DATABASE_URL: postgres://postgres:postgres@localhost:5432/mspri1-2-address
+
+  postgres:
+    container_name: db
+    image: postgres
     environment:
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/mspri1-2-address
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USERNAME: postgres
+      POSTGRES_DB: mspri1-2-address
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+
+
 
 volumes:
-  postgres-data:
+  postgres:
