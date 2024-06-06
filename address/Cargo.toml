@@ -1,0 +1,14 @@
+[package]
+name = "address"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dotenv = "0.15.0"
+sea-orm = { version = "0.12.15", features = ["sqlx-postgres", "runtime-tokio-rustls", "macros"] }
+tokio = { version = "1.38.0", features = ["full"] }
+uuid = { version = "1.8.0", features = ["v4"] }
+fake = "2.9.2"
+api = {path = "./api"}
+[workspace]
+members = [".", "migration", "api", "entities"]
