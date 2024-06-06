@@ -1,12 +1,10 @@
-
-FROM rust:latest
+FROM rust:1.78.0-buster as builder
 
 
 RUN mkdir /app
-WORKDIR /app
 
 
-COPY .. .
+COPY . .
 
 
 RUN cargo build --release
@@ -15,4 +13,4 @@ RUN cargo build --release
 EXPOSE 8080
 
 # Démarrez votre application
-CMD ["./target/release/your-app-name"]
+CMD ["./target/release/address"]

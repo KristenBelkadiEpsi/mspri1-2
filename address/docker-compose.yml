@@ -1,8 +1,7 @@
-version: '3'
-
 services:
 
   postgres:
+    container_name: db
     image: postgres:latest
     environment:
       POSTGRES_PASSWORD: postgres
@@ -13,7 +12,10 @@ services:
       - "5432:5432"
 
   backend:
-    build: ..
+    container_name: rustapp
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     depends_on:
