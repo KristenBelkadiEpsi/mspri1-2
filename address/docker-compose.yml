@@ -1,6 +1,5 @@
 services:
-  backend:
-    container_name: rustapp
+  rust-app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -8,23 +7,19 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
-#    environment:
-#      DATABASE_URL: postgres://postgres:postgres@localhost:5432/mspri1-2-address
+    tty: true
 
   postgres:
-    container_name: db
-    image: postgres
+    image: postgres:13
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_USERNAME: postgres
       POSTGRES_DB: mspri1-2-address
-    volumes:
-      - postgres:/data/postgres
+      PGDB: 2345
     ports:
-      - "5432:5432"
-
-
+      - "2345:2345"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  postgres:
+  postgres_data:

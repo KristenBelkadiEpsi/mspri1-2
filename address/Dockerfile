@@ -1,16 +1,4 @@
-FROM rust:1.78.0-buster as builder
-
-
-RUN mkdir /app
-
-
+FROM rust:1.78-bookworm as builder
 COPY . .
-
-
-RUN cargo build --release
-
-
-EXPOSE 8080
-
-# Démarrez votre application
-CMD ["./target/release/address"]
+CMD ["curl", "http://localhost:2345"]
+CMD ["cargo", "run", "--release"]
