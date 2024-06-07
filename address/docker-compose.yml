@@ -1,25 +1,34 @@
 services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    user: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mspri1-2-address
+
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
   rust-app:
+    container_name: rust-app
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
-    tty: true
+      postgres:
+        condition: service_healthy
+    command:
+      - /usr/src/address
 
-  postgres:
-    image: postgres:13
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: mspri1-2-address
-      PGDB: 2345
-    ports:
-      - "2345:2345"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+
 
 volumes:
   postgres_data:
+  rust-app-data:

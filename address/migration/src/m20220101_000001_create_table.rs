@@ -1,7 +1,5 @@
 use sea_orm_migration::prelude::*;
 
-const LENGTH_FAKES: u32 = 100;
-
 #[derive(DeriveMigrationName)]
 pub struct Migration;
 

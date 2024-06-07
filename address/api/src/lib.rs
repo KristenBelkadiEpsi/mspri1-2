@@ -114,10 +114,8 @@ async fn create_address(state: web::Data<AppState>, payload: web::Payload) -> im
 pub async fn create() -> std::io::Result<()> {
     dotenv().ok();
     let url = std::env::var("DATABASE_URL").expect("DATABASE_URL introuvable !");
-    println!("{}", "-".repeat(100));
-    println!("{}", url);
-    println!("{}", "-".repeat(100));
     let db = Database::connect(url).await.unwrap();
+
     migration::Migrator::fresh(&db).await.unwrap();
     HttpServer::new(move || {
         App::new().service(
@@ -130,7 +128,7 @@ pub async fn create() -> std::io::Result<()> {
                 connection: db.clone(),
             }))
     })
-        .bind(("localhost", 8080))?
+        .bind(("0.0.0.0", 8080))?
         .run()
         .await?;
     Ok(())
