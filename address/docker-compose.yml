@@ -14,6 +14,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
   rust-app:
     container_name: rust-app
     build:
